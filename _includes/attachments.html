@@ -1,0 +1,14 @@
+{% if page.attachments and page.attachments.size > 0 %}
+  <section class="attachments" aria-label="Lampiran">
+    <h2>Lampiran</h2>
+    <ul>
+      {% for attachment in page.attachments %}
+        <li>
+          <a href="{{ attachment | resolve_asset }}" download>
+            {{ attachment.label | default: "Unduh berkas" }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}

@@ -1,0 +1,13 @@
+<section class="service-times-snippet" aria-label="Jadwal ibadah">
+  <h2>Jadwal Ibadah</h2>
+  <ul class="times-list">
+    {% for slot in site.data.site.service_times %}
+      <li>
+        <strong>{{ slot.name }}</strong>
+        <span>{{ slot.day }}, {{ slot.time }} WIB</span>
+        {% if slot.note %}<small>{{ slot.note }}</small>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+  <a class="text-link" href="{{ '/jadwal-ibadah/' | relative_url }}">Lihat jadwal lengkap &rarr;</a>
+</section>

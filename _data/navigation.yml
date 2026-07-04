@@ -1,0 +1,12 @@
+- label: Beranda
+  path: /
+- label: Tentang Kami
+  path: /tentang-kami/
+- label: Jadwal Ibadah
+  path: /jadwal-ibadah/
+- label: Acara
+  path: /acara/
+- label: Berita
+  path: /berita/
+- label: Kontak
+  path: /kontak/

@@ -1,0 +1,15 @@
+---
+layout: default
+---
+<article class="berita-post">
+  <header class="post-header">
+    <p class="post-meta">{{ page.date | date: "%d %B %Y" }}</p>
+    <h1>{{ page.title }}</h1>
+  </header>
+  {% include cover-image.html %}
+  <div class="prose">
+    {{ content }}
+  </div>
+  {% include attachments.html %}
+  <p class="back-link"><a href="{{ '/berita/' | relative_url }}">&larr; Kembali ke Berita</a></p>
+</article>

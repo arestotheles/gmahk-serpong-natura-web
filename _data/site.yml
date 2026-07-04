@@ -1,0 +1,23 @@
+name: GMAHK Serpong Natura
+tagline: Selamat datang di rumah kita bersama
+church_name: GMAHK Serpong Natura
+
+service_times:
+  - name: Sekolah Sabat
+    day: Sabtu
+    time: "08:00"
+    note: Pelajaran Alkitab untuk semua usia
+  - name: Ibadah Utama
+    day: Sabtu
+    time: "09:00"
+    note: Kebaktian ibadah bersama
+
+contact:
+  address: "Serpong Natura, Tangerang Selatan, Banten"
+  phone: "+62 812-0000-0000"
+  email: "info@gmahk-serpong-natura.example"
+  map_embed_url: "https://maps.google.com/maps?q=Serpong+Natura+Tangerang&output=embed"
+
+social:
+  instagram: ""
+  facebook: ""

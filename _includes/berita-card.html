@@ -1,0 +1,17 @@
+<article class="card berita-card">
+  {% if include.post.cover %}
+    {% assign cover_url = include.post.cover | resolve_cover %}
+    {% if cover_url %}
+      <a class="card-media" href="{{ include.post.url | relative_url }}">
+        <img src="{{ cover_url }}" alt="">
+      </a>
+    {% endif %}
+  {% endif %}
+  <div class="card-body">
+    <p class="card-meta">{{ include.post.date | date: "%d %B %Y" }}</p>
+    <h3 class="card-title"><a href="{{ include.post.url | relative_url }}">{{ include.post.title }}</a></h3>
+    {% if include.post.excerpt %}
+      <p class="card-excerpt">{{ include.post.excerpt | strip_html | truncate: 140 }}</p>
+    {% endif %}
+  </div>
+</article>
