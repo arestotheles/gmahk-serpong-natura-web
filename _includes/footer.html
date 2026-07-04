@@ -1,0 +1,15 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="footer-name">{{ site.data.site.church_name }}</p>
+    <p class="footer-address">{{ site.data.site.contact.address }}</p>
+    <div class="footer-social">
+      {% if site.data.site.social.instagram != "" %}
+        <a href="{{ site.data.site.social.instagram }}" rel="noopener noreferrer" target="_blank">Instagram</a>
+      {% endif %}
+      {% if site.data.site.social.facebook != "" %}
+        <a href="{{ site.data.site.social.facebook }}" rel="noopener noreferrer" target="_blank">Facebook</a>
+      {% endif %}
+    </div>
+    <p class="footer-copy">&copy; {{ 'now' | date: '%Y' }} {{ site.data.site.church_name }}</p>
+  </div>
+</footer>

@@ -1,0 +1,45 @@
+title: GMAHK Serpong Natura
+description: Gereja Masehi Advent Hari Ketujuh Serpong Natura — situs resmi
+url: "https://gmahk-serpong-natura.github.io"
+baseurl: "/gmahk-serpong-natura-web"
+lang: id
+
+markdown: kramdown
+theme: null
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+collections:
+  berita:
+    output: true
+    permalink: /berita/:year/:month/:day/:title/
+  events:
+    output: true
+    permalink: /acara/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: berita
+    values:
+      layout: berita
+  - scope:
+      path: ""
+      type: events
+    values:
+      layout: event
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - spec
+  - docs/plans
+  - docs/brainstorms
+  - README.md

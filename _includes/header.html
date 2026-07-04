@@ -1,0 +1,28 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-brand" href="{{ '/' | relative_url }}">
+      <img src="{{ '/assets/images/logo-placeholder.svg' | relative_url }}" alt="{{ site.data.site.church_name }}" class="site-logo" width="40" height="40">
+      <span class="site-title">{{ site.data.site.church_name }}</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Buka menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Navigasi utama">
+      <ul>
+        {% for item in site.data.navigation %}
+          {% assign item_path = item.path | append: '' %}
+          {% if item_path == '/' %}
+            {% assign is_active = page.url == '/' %}
+          {% else %}
+            {% assign is_active = page.url contains item_path %}
+          {% endif %}
+          <li>
+            <a href="{{ item.path | relative_url }}"{% if is_active %} class="active" aria-current="page"{% endif %}>
+              {{ item.label }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,17 @@
+<article class="card event-card">
+  {% if include.event.cover %}
+    {% assign cover_url = include.event.cover | resolve_cover %}
+    {% if cover_url %}
+      <a class="card-media" href="{{ include.event.url | relative_url }}">
+        <img src="{{ cover_url }}" alt="">
+      </a>
+    {% endif %}
+  {% endif %}
+  <div class="card-body">
+    <p class="card-meta">{{ include.event.event_date | date: "%d %B %Y" }}</p>
+    <h3 class="card-title"><a href="{{ include.event.url | relative_url }}">{{ include.event.title }}</a></h3>
+    {% if include.event.description %}
+      <p class="card-excerpt">{{ include.event.description }}</p>
+    {% endif %}
+  </div>
+</article>

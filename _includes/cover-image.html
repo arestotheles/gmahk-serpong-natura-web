@@ -1,0 +1,8 @@
+{% if page.cover %}
+  {% assign cover_url = page.cover | resolve_cover %}
+  {% if cover_url %}
+    <figure class="cover-image">
+      <img src="{{ cover_url }}" alt="{{ page.title | escape }}">
+    </figure>
+  {% endif %}
+{% endif %}
