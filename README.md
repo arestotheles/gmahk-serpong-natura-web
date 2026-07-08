@@ -33,9 +33,11 @@ bundle exec jekyll build
 
 ## Deploy ke GitHub Pages
 
-1. Push ke branch `main`
-2. Di repositori GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**
+1. **Aktifkan Pages sekali (wajib untuk repo baru):** GitHub repo → **Settings → Pages** → **Build and deployment** → **Source: GitHub Actions** (bukan "Deploy from a branch").
+2. Push ke branch `main`
 3. Workflow `.github/workflows/jekyll.yml` membangun dan menerbitkan situs
+
+Jika workflow gagal dengan `Get Pages site failed` / `Not Found`, langkah 1 belum dilakukan. Workflow memakai `enablement: true` agar Pages bisa diaktifkan otomatis pada run pertama, tetapi beberapa akun/org tetap memerlukan pengaturan manual di Settings.
 
 Setelah deploy pertama, situs tersedia di:
 
