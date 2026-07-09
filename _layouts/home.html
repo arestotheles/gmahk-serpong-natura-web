@@ -1,0 +1,31 @@
+---
+layout: default
+---
+{% for section in site.data.home.sections %}
+  {% if section.enabled %}
+    {% assign band_index = forloop.index0 | modulo: 2 %}
+    <section
+      class="section-band{% if band_index == 1 %} section-band--alt{% endif %}"
+      id="{{ section.id }}"
+      {% if section.id != 'hero' %}aria-labelledby="{{ section.id }}-heading"{% endif %}>
+      <div class="section-inner">
+        {% case section.id %}
+          {% when 'hero' %}
+            {% include home/hero.html %}
+          {% when 'jadwal' %}
+            {% include home/jadwal.html %}
+          {% when 'tentang' %}
+            {% include home/tentang.html %}
+          {% when 'acara' %}
+            {% include home/acara.html %}
+          {% when 'berita' %}
+            {% include home/berita.html %}
+          {% when 'kontak' %}
+            {% include home/kontak.html %}
+          {% when 'pengurus' %}
+            {% include home/pengurus.html %}
+        {% endcase %}
+      </div>
+    </section>
+  {% endif %}
+{% endfor %}

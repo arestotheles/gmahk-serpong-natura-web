@@ -1,0 +1,10 @@
+<h2 id="jadwal-heading">Jadwal Ibadah</h2>
+<ul class="times-list">
+  {% for slot in site.data.site.service_times %}
+    <li>
+      <strong>{{ slot.name }}</strong>
+      <span>{{ slot.day }}, {{ slot.time }} WIB</span>
+      {% if slot.note %}<small>{{ slot.note }}</small>{% endif %}
+    </li>
+  {% endfor %}
+</ul>

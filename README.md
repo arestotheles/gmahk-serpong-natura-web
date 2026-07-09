@@ -4,9 +4,11 @@ Situs web statis gereja GMAHK Serpong Natura (Bahasa Indonesia), dibangun dengan
 
 ## Halaman
 
-- Beranda, Tentang Kami, Jadwal Ibadah, Acara, Berita, Kontak
-- Admin memperbarui Berita dan Acara sebagai file Markdown di GitHub
-- Media dapat disimpan di repositori GitHub atau di S3/CloudFront (per file)
+- **Beranda** — satu halaman scroll: Hero, Jadwal, Tentang, Acara, Berita, Kontak (navigasi anchor)
+- **Arsip** — Berita (`/berita/`) dan Acara (`/acara/`) tetap halaman terpisah
+- URL lama `/tentang-kami/`, `/jadwal-ibadah/`, `/kontak/` dialihkan ke bagian Beranda
+
+Branch **`version2`** berisi layout v2 (free-flow, full-bleed). Branch `main` / `feat/church-website` tetap v1 sampai merge.
 
 **Panduan admin:** [docs/admin-guide.md](docs/admin-guide.md)
 
