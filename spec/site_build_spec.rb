@@ -13,18 +13,33 @@ RSpec.describe "Site build" do
     expect(File).to exist(File.join(site_dir, "index.html"))
   end
 
-  it "builds key pages" do
-    %w[berita/index.html acara/index.html kontak/index.html tentang-kami/index.html].each do |path|
+  it "builds archive pages and redirect stubs" do
+    %w[berita/index.html acara/index.html tentang-kami/index.html jadwal-ibadah/index.html kontak/index.html].each do |path|
       expect(File).to exist(File.join(site_dir, path)), "missing #{path}"
     end
   end
 
-  it "includes all navigation labels on home" do
+  it "orders home sections hero through kontak" do
+    html = File.read(File.join(site_dir, "index.html"))
+    ids = %w[hero jadwal tentang acara berita kontak]
+    positions = ids.map { |id| html.index("id=\"#{id}\"") }
+    expect(positions).to all(be_a(Integer))
+    expect(positions).to eq(positions.sort)
+  end
+
+  it "includes navigation labels on home" do
     html = File.read(File.join(site_dir, "index.html"))
     expect(html).to include("Tentang Kami")
     expect(html).to include("Jadwal Ibadah")
     expect(html).to include("Berita")
     expect(html).to include("Kontak")
+  end
+
+  it "uses anchor links in navigation" do
+    html = File.read(File.join(site_dir, "index.html"))
+    expect(html).to include("#jadwal")
+    expect(html).to include("#tentang")
+    expect(html).to include("#kontak")
   end
 
   it "includes mobile viewport meta tag" do
@@ -36,6 +51,19 @@ RSpec.describe "Site build" do
     html = File.read(File.join(site_dir, "index.html"))
     expect(html.scan("berita-card").length).to eq(2)
     expect(html).to include("Lihat semua")
+  end
+
+  it "includes contact map on home" do
+    html = File.read(File.join(site_dir, "index.html"))
+    expect(html).to include("<iframe")
+    expect(html).to include("maps.google.com")
+    expect(html).not_to include("<form")
+  end
+
+  it "redirects legacy tentang-kami URL" do
+    html = File.read(File.join(site_dir, "tentang-kami", "index.html"))
+    expect(html).to include("http-equiv=\"refresh\"")
+    expect(html).to include("#tentang")
   end
 
   it "renders mixed-storage berita post (AE1)" do
@@ -53,9 +81,8 @@ RSpec.describe "Site build" do
     expect(acara_html).to include("Perkemahan Pemuda")
   end
 
-  it "includes contact map embed" do
-    html = File.read(File.join(site_dir, "kontak", "index.html"))
-    expect(html).to include("<iframe")
-    expect(html).to include("maps.google.com")
+  it "points berita archive nav to home anchor" do
+    html = File.read(File.join(site_dir, "berita", "index.html"))
+    expect(html).to include("#berita")
   end
 end

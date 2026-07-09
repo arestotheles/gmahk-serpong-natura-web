@@ -1,0 +1,12 @@
+<h2 id="berita-heading">Berita Terbaru</h2>
+{% assign latest_berita = site.berita | sort: 'date' | reverse %}
+{% if latest_berita.size > 0 %}
+  <div class="card-grid">
+    {% for post in latest_berita limit: 2 %}
+      {% include berita-card.html post=post %}
+    {% endfor %}
+  </div>
+  <p><a class="text-link" href="{{ '/berita/' | relative_url }}">Lihat semua &rarr;</a></p>
+{% else %}
+  <p class="empty-state">Belum ada berita. Kunjungi halaman Berita lagi nanti.</p>
+{% endif %}

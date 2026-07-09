@@ -12,9 +12,9 @@
         {% for item in site.data.navigation %}
           {% assign item_path = item.path | append: '' %}
           {% if item_path == '/' %}
-            {% assign is_active = page.url == '/' %}
+            {% assign is_active = page.url == '/' or page.url == '/index.html' %}
           {% else %}
-            {% assign is_active = page.url contains item_path %}
+            {% assign is_active = false %}
           {% endif %}
           <li>
             <a href="{{ item.path | relative_url }}"{% if is_active %} class="active" aria-current="page"{% endif %}>

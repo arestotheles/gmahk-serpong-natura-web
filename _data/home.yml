@@ -1,0 +1,15 @@
+sections:
+  - id: hero
+    enabled: true
+  - id: jadwal
+    enabled: true
+  - id: tentang
+    enabled: true
+  - id: acara
+    enabled: true
+  - id: berita
+    enabled: true
+  - id: kontak
+    enabled: true
+  - id: pengurus
+    enabled: false

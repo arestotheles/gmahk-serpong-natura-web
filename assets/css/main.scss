@@ -24,6 +24,11 @@ body {
   background: $color-bg;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
 a {
   color: $color-header;
 }
@@ -37,6 +42,9 @@ img {
 .site-header {
   background: $color-header;
   color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .header-inner {
@@ -108,6 +116,42 @@ img {
   padding: 1.5rem 1rem 3rem;
 }
 
+.site-main--home {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.section-band {
+  width: 100%;
+  padding: 2.5rem 1rem;
+  background: $color-bg;
+}
+
+.section-band--alt {
+  background: #fff;
+}
+
+.section-band--page {
+  background: $color-bg;
+  min-height: 40vh;
+}
+
+.section-inner {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+.section-band h2 {
+  color: $color-header;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.section-band h3 {
+  color: $color-header;
+}
+
 .site-footer {
   background: #e8e2da;
   padding: 2rem 1rem;
@@ -131,7 +175,7 @@ img {
 .hero {
   display: grid;
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
 }
 
 .hero-image img {
@@ -174,8 +218,10 @@ img {
 
 .times-list {
   list-style: none;
-  margin: 0 0 1rem;
-  padding: 0;
+  margin: 0;
+  padding: 1.25rem;
+  background: $color-accent;
+  border-radius: $radius;
 }
 
 .times-list li {

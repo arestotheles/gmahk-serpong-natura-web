@@ -6,11 +6,32 @@ Panduan ini untuk admin yang memperbarui **Berita**, **Acara**, dan media melalu
 
 | Path | Isi |
 |------|-----|
+| `_data/home.yml` | Urutan dan on/off bagian Beranda (section registry) |
+| `_data/about.yml` | Teks Tentang Kami di Beranda |
+| `_data/site.yml` | Info gereja, jadwal, kontak, media sosial |
 | `_berita/` | Artikel berita dan pengumuman |
 | `_events/` | Acara dengan tanggal |
-| `_data/site.yml` | Info gereja, jadwal, kontak, media sosial |
 | `assets/images/` | Gambar di GitHub (kecil–sedang) |
 | `assets/pdf/` | PDF di GitHub |
+
+## Bagian Beranda (section registry)
+
+File `_data/home.yml` mengatur bagian mana yang tampil di Beranda dan urutannya:
+
+```yaml
+sections:
+  - id: hero
+    enabled: true
+  - id: jadwal
+    enabled: true
+  # ...
+  - id: pengurus
+    enabled: false   # ubah ke true setelah konten siap
+```
+
+Setiap `id` harus punya file partial di `_includes/home/<id>.html`. Untuk menambah bagian baru: buat partial, tambahkan entri di `home.yml`, set `enabled: true`.
+
+Navigasi header memakai anchor (`/#tentang`, `/#jadwal`, dll.) ke bagian di Beranda.
 
 ## Menambah Berita
 
@@ -102,10 +123,12 @@ Jika `storage: github` tanpa `path`, atau `storage: s3` tanpa `url`, build GitHu
 
 Edit `_data/site.yml` untuk:
 
-- Jadwal ibadah
-- Alamat, telepon, email
+- Jadwal ibadah (ditampilkan di bagian Jadwal Beranda)
+- Alamat, telepon, email (bagian Kontak Beranda)
 - URL embed Google Maps (`map_embed_url`)
 - Tautan Instagram/Facebook (kosongkan string `""` untuk menyembunyikan ikon)
+
+Teks **Tentang Kami** di Beranda: edit `_data/about.yml`.
 
 ## Waktu Deploy
 
