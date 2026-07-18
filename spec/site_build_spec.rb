@@ -81,6 +81,40 @@ RSpec.describe "Site build" do
     expect(acara_html).to include("Perkemahan Pemuda")
   end
 
+  it "hides Instagram berita when sync is disabled (AE4)" do
+    berita_html = File.read(File.join(site_dir, "berita", "index.html"))
+    home_html = File.read(File.join(site_dir, "index.html"))
+    expect(berita_html).not_to include("[Fixture] Instagram Berita Tersembunyi")
+    expect(home_html).not_to include("[Fixture] Instagram Berita Tersembunyi")
+  end
+
+  describe "Instagram berita when enabled" do
+    before(:all) do
+      @repo_root = File.expand_path("..", __dir__)
+      @instagram_config_path = File.join(@repo_root, "_data", "instagram.yml")
+      @original_instagram_config = File.read(@instagram_config_path)
+      enabled_config = @original_instagram_config.gsub("enabled: false", "enabled: true")
+      File.write(@instagram_config_path, enabled_config)
+      system("bundle exec jekyll build", chdir: @repo_root, exception: true)
+      @enabled_site_dir = File.join(@repo_root, "_site")
+    end
+
+    after(:all) do
+      File.write(@instagram_config_path, @original_instagram_config)
+    end
+
+    it "shows Dari Instagram badge on enabled fixture post (AE3)" do
+      post_html = File.read(File.join(@enabled_site_dir, "berita", "2026", "05", "15", "ig-fixture-hidden", "index.html"))
+      expect(post_html).to include("Dari Instagram")
+      expect(post_html).to include("https://cdninstagram.com/fixture/hidden.jpg")
+    end
+
+    it "lists enabled Instagram berita on archive page" do
+      berita_html = File.read(File.join(@enabled_site_dir, "berita", "index.html"))
+      expect(berita_html).to include("[Fixture] Instagram Berita Tersembunyi")
+    end
+  end
+
   it "points berita archive nav to home anchor" do
     html = File.read(File.join(site_dir, "berita", "index.html"))
     expect(html).to include("#berita")

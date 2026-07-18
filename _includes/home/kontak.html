@@ -2,7 +2,12 @@
 <p>Hubungi kami atau kunjungi gereja pada hari Sabtu.</p>
 
 <h3>Alamat</h3>
-<p>{{ site.data.site.contact.address }}</p>
+<p>
+  {{ site.data.site.contact.address }}
+  {% if site.data.site.contact.map_link %}
+    <br><a href="{{ site.data.site.contact.map_link }}" target="_blank" rel="noopener noreferrer">Buka di Google Maps</a>
+  {% endif %}
+</p>
 
 <h3>Telepon</h3>
 <p><a href="tel:{{ site.data.site.contact.phone | replace: ' ', '' | replace: '-', '' }}">{{ site.data.site.contact.phone }}</a></p>

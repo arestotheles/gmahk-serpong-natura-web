@@ -1,8 +1,8 @@
 <h2 id="berita-heading">Berita Terbaru</h2>
-{% assign latest_berita = site.berita | sort: 'date' | reverse %}
-{% if latest_berita.size > 0 %}
+{% include berita-visible-posts-assign.html %}
+{% if visible_berita.size > 0 %}
   <div class="card-grid">
-    {% for post in latest_berita limit: 2 %}
+    {% for post in visible_berita limit: 2 %}
       {% include berita-card.html post=post %}
     {% endfor %}
   </div>

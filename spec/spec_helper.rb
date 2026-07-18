@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rspec"
+require "liquid"
 require_relative "../_plugins/asset_resolver"
 
 RSpec.configure do |config|

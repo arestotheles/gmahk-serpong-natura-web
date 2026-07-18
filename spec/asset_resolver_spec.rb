@@ -16,6 +16,21 @@ RSpec.describe AssetResolver do
       expect(described_class.resolve(asset, baseurl: "/base")).to eq("https://d123.cloudfront.net/foo.jpg")
     end
 
+    it "resolves external storage with https url unchanged" do
+      asset = { "storage" => "external", "url" => "https://cdninstagram.com/v/image.jpg" }
+      expect(described_class.resolve(asset, baseurl: "/base")).to eq("https://cdninstagram.com/v/image.jpg")
+    end
+
+    it "raises when external storage uses non-https url" do
+      asset = { "storage" => "external", "url" => "http://cdninstagram.com/v/image.jpg" }
+      expect { described_class.resolve(asset, baseurl: "") }.to raise_error(ArgumentError, /https URL/)
+    end
+
+    it "raises when external storage lacks url" do
+      asset = { "storage" => "external" }
+      expect { described_class.resolve(asset, baseurl: "") }.to raise_error(ArgumentError, /requires 'url'/)
+    end
+
     it "raises when github storage lacks path" do
       asset = { "storage" => "github" }
       expect { described_class.resolve(asset, baseurl: "") }.to raise_error(ArgumentError, /requires 'path'/)

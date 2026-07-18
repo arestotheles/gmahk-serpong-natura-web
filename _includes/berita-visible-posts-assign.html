@@ -1,0 +1,6 @@
+{% assign all_berita = site.berita | sort: 'date' | reverse %}
+{% if site.data.instagram.enabled %}
+  {% assign visible_berita = all_berita %}
+{% else %}
+  {% assign visible_berita = all_berita | where_exp: "item", "item.source != 'instagram'" %}
+{% endif %}
