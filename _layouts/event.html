@@ -2,16 +2,20 @@
 layout: default
 ---
 <article class="event-post">
-  <header class="post-header">
-    <p class="post-meta">{{ page.event_date | date: "%d %B %Y" }}</p>
-    <h1>{{ page.title }}</h1>
-  </header>
-  {% include cover-image.html %}
-  <div class="prose">
-    {% if page.description %}
-      <p class="lead">{{ page.description }}</p>
-    {% endif %}
-    {{ content }}
+  <div class="section-band section-band--page">
+    <div class="section-inner">
+      <header class="post-header">
+        <p class="post-meta">{{ page.event_date | date: "%d %B %Y" }}</p>
+        <h1>{{ page.title }}</h1>
+      </header>
+      {% include cover-image.html %}
+      <div class="prose">
+        {% if page.description %}
+          <p class="lead">{{ page.description }}</p>
+        {% endif %}
+        {{ content }}
+      </div>
+      <p class="back-link"><a href="{{ '/acara/' | relative_url }}">&larr; Kembali ke Acara</a></p>
+    </div>
   </div>
-  <p class="back-link"><a href="{{ '/acara/' | relative_url }}">&larr; Kembali ke Acara</a></p>
 </article>

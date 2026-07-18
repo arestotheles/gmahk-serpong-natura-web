@@ -1,0 +1,22 @@
+<h2 id="kontak-heading">Kontak</h2>
+<p>Hubungi kami atau kunjungi gereja pada hari Sabtu.</p>
+
+<h3>Alamat</h3>
+<p>{{ site.data.site.contact.address }}</p>
+
+<h3>Telepon</h3>
+<p><a href="tel:{{ site.data.site.contact.phone | replace: ' ', '' | replace: '-', '' }}">{{ site.data.site.contact.phone }}</a></p>
+
+<h3>Email</h3>
+<p><a href="mailto:{{ site.data.site.contact.email }}">{{ site.data.site.contact.email }}</a></p>
+
+<h3>Peta</h3>
+<div class="map-embed">
+  <iframe
+    src="{{ site.data.site.contact.map_embed_url }}"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    title="Peta lokasi GMAHK Serpong Natura"
+    allowfullscreen>
+  </iframe>
+</div>
