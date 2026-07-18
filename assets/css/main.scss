@@ -1,12 +1,16 @@
 ---
 ---
 
-$color-bg: #faf8f5;
-$color-header: #5c4a3a;
-$color-accent: #e8d5c4;
-$color-accent-green: #d4e8d0;
-$color-text: #333333;
-$color-muted: #666666;
+// Natura Garden palette
+$color-bg: #f4f7f2;
+$color-header: #2f5d50;
+$color-accent: #dde8d6;
+$color-accent-secondary: #e8c872;
+$color-accent-highlight: #f2ebd4;
+$color-link: #3a6b5c;
+$color-text: #2a2f2a;
+$color-muted: #5c6b5e;
+$color-footer: #e2eae0;
 $max-width: 1100px;
 $radius: 12px;
 
@@ -30,7 +34,7 @@ html {
 }
 
 a {
-  color: $color-header;
+  color: $color-link;
 }
 
 img {
@@ -107,7 +111,7 @@ img {
 
 .site-nav a:hover,
 .site-nav a.active {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .site-main {
@@ -153,9 +157,9 @@ img {
 }
 
 .site-footer {
-  background: #e8e2da;
+  background: $color-footer;
   padding: 2rem 1rem;
-  margin-top: 2rem;
+  margin-top: 0;
 }
 
 .footer-inner {
@@ -200,6 +204,10 @@ img {
   font-weight: 600;
 }
 
+.button:hover {
+  background: #284f44;
+}
+
 .section-block {
   margin-bottom: 2.5rem;
 }
@@ -226,7 +234,7 @@ img {
 
 .times-list li {
   padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(47, 93, 80, 0.12);
 }
 
 .times-list li:last-child {
@@ -248,7 +256,7 @@ img {
   background: #fff;
   border-radius: $radius;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 12px rgba(47, 93, 80, 0.08);
 }
 
 .card-media img {
@@ -267,13 +275,32 @@ img {
   margin: 0 0 0.35rem;
 }
 
+.berita-source-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: $color-header;
+  background: $color-accent;
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
 .card-title {
   margin: 0 0 0.5rem;
   font-size: 1.1rem;
 }
 
 .card-title a {
+  color: $color-link;
   text-decoration: none;
+}
+
+.card-title a:hover {
+  color: $color-header;
 }
 
 .card-excerpt {
@@ -284,6 +311,7 @@ img {
 
 .text-link {
   font-weight: 600;
+  color: $color-link;
 }
 
 .page-header h1,
@@ -296,6 +324,10 @@ img {
   max-width: 72ch;
 }
 
+.prose a {
+  color: $color-link;
+}
+
 .prose img {
   border-radius: 8px;
   margin: 1rem 0;
@@ -304,7 +336,7 @@ img {
 .attachments {
   margin-top: 2rem;
   padding: 1rem;
-  background: $color-accent-green;
+  background: $color-accent-highlight;
   border-radius: $radius;
 }
 
@@ -334,6 +366,10 @@ img {
   margin-top: 2rem;
 }
 
+.back-link a {
+  color: $color-link;
+}
+
 @media (max-width: 768px) {
   .nav-toggle {
     display: flex;
@@ -354,7 +390,7 @@ img {
   }
 
   .site-header {
-    position: relative;
+    position: sticky;
   }
 
   .site-nav ul {

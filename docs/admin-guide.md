@@ -9,6 +9,7 @@ Panduan ini untuk admin yang memperbarui **Berita**, **Acara**, dan media melalu
 | `_data/home.yml` | Urutan dan on/off bagian Beranda (section registry) |
 | `_data/about.yml` | Teks Tentang Kami di Beranda |
 | `_data/site.yml` | Info gereja, jadwal, kontak, media sosial |
+| `_data/instagram.yml` | Feature flag dan status sinkronisasi Instagram → Berita |
 | `_berita/` | Artikel berita dan pengumuman |
 | `_events/` | Acara dengan tanggal |
 | `assets/images/` | Gambar di GitHub (kecil–sedang) |
@@ -110,6 +111,18 @@ attachments:
 
 **Campuran dalam satu artikel:** cover di S3, PDF di GitHub — didukung.
 
+### URL eksternal (`storage: external`)
+
+Untuk gambar yang di-host di luar repo (misalnya hotlink Instagram dari sinkronisasi otomatis):
+
+```yaml
+cover:
+  storage: external
+  url: https://cdninstagram.com/path/image.jpg
+```
+
+URL harus memakai `https://`.
+
 ### Gambar di dalam artikel (inline)
 
 - **GitHub:** `![alt]({{ '/assets/images/foto.jpg' | relative_url }})` atau path relatif sesuai panduan Jekyll.
@@ -117,7 +130,58 @@ attachments:
 
 ## Kesalahan Front Matter
 
-Jika `storage: github` tanpa `path`, atau `storage: s3` tanpa `url`, build GitHub Actions akan gagal dengan pesan error yang menjelaskan field yang kurang. Perbaiki file Markdown lalu push lagi.
+Jika `storage: github` tanpa `path`, `storage: s3` tanpa `url`, atau `storage: external` tanpa `url` HTTPS, build GitHub Actions akan gagal dengan pesan error yang menjelaskan field yang kurang. Perbaiki file Markdown lalu push lagi.
+
+## Sinkronisasi Instagram ke Berita
+
+Postingan dari [@gmahk_serpong_natura](https://www.instagram.com/gmahk_serpong_natura/) dapat ditarik otomatis ke daftar Berita. File hasil sinkronisasi disimpan di `_berita/` dengan badge **Dari Instagram**.
+
+**Penting:** Instagram sering memblokir akses anonim (error 403). Instaloader bisa menampilkan pesan "profile does not exist" padahal profil ada. Gunakan akun Instagram gereja untuk login.
+
+### Kredensial
+
+Lokal (PowerShell):
+
+```powershell
+$env:INSTAGRAM_USERNAME = "akun_ig_gereja"
+$env:INSTAGRAM_PASSWORD = "kata_sandi"
+```
+
+Di GitHub Actions, tambahkan secrets `INSTAGRAM_USERNAME` dan `INSTAGRAM_PASSWORD` di pengaturan repository.
+
+Konfigurasi di `_data/instagram.yml`:
+
+```yaml
+enabled: false              # tampilkan berita IG + izinkan sync
+schedule_enabled: false     # aktifkan cron mingguan (fase 2)
+bootstrap_verified: false   # set true setelah verifikasi manual
+handle: gmahk_serpong_natura
+last_sync_at: null
+synced_post_ids: []
+```
+
+### Fase 1 — Bootstrap (5 posting terakhir)
+
+1. Set `enabled: true`, commit, push.
+2. Jalankan sync dengan kredensial (lokal atau GitHub Actions):
+   - **Lokal:** `python scripts/instagram_sync/sync.py --bootstrap --limit 5`
+   - **GitHub:** Actions → workflow **Instagram Berita Sync** → Run workflow → mode **bootstrap**
+3. Jika listing profil gagal, impor manual per URL:
+   `python scripts/instagram_sync/sync.py --import-url "https://www.instagram.com/p/SHORTCODE/"`
+4. Tunggu deploy situs; periksa kartu berita, halaman detail, gambar, dan badge.
+5. Jika sudah benar, set `bootstrap_verified: true`, commit, push.
+
+### Fase 2 — Sync mingguan
+
+1. Set `schedule_enabled: true`, commit, push.
+2. Workflow berjalan otomatis setiap Senin (03:00 UTC) dan menambahkan posting baru saja.
+3. Untuk uji manual: jalankan workflow dengan mode **incremental**.
+
+### Menonaktifkan
+
+Set `enabled: false`. Berita manual tidak berubah; berita dari Instagram disembunyikan dari daftar (file tetap ada di repo).
+
+**Catatan:** Gambar disimpan sebagai tautan hotlink ke Instagram, bukan di `assets/images/`. Jika tautan kedaluwarsa, gambar dapat hilang dari situs.
 
 ## Memperbarui Info Gereja
 
@@ -125,7 +189,8 @@ Edit `_data/site.yml` untuk:
 
 - Jadwal ibadah (ditampilkan di bagian Jadwal Beranda)
 - Alamat, telepon, email (bagian Kontak Beranda)
-- URL embed Google Maps (`map_embed_url`)
+- `map_link` — tautan Google Maps ke lokasi gereja (untuk navigasi)
+- `map_embed_url` — URL embed iframe (koordinat tepat gereja)
 - Tautan Instagram/Facebook (kosongkan string `""` untuk menyembunyikan ikon)
 
 Teks **Tentang Kami** di Beranda: edit `_data/about.yml`.

@@ -8,7 +8,10 @@
     {% endif %}
   {% endif %}
   <div class="card-body">
-    <p class="card-meta">{{ include.post.date | date: "%d %B %Y" }}</p>
+    <p class="card-meta">
+      {{ include.post.date | date: "%d %B %Y" }}
+      {% include berita-instagram-badge.html post=include.post %}
+    </p>
     <h3 class="card-title"><a href="{{ include.post.url | relative_url }}">{{ include.post.title }}</a></h3>
     {% if include.post.excerpt %}
       <p class="card-excerpt">{{ include.post.excerpt | strip_html | truncate: 140 }}</p>

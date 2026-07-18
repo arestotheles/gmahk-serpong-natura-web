@@ -1,0 +1,75 @@
+name: Instagram Berita Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Sync mode"
+        required: true
+        type: choice
+        options:
+          - bootstrap
+          - incremental
+  schedule:
+    - cron: "0 3 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Instagram sync
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_MODE: ${{ github.event.inputs.mode }}
+        run: |
+          set -euo pipefail
+
+          MODE="$INPUT_MODE"
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            MODE="incremental"
+          fi
+
+          ENABLED=$(ruby -ryaml -e "puts YAML.load_file('_data/instagram.yml').fetch('enabled', false)")
+          BOOTSTRAP=$(ruby -ryaml -e "puts YAML.load_file('_data/instagram.yml').fetch('bootstrap_verified', false)")
+          SCHEDULE=$(ruby -ryaml -e "puts YAML.load_file('_data/instagram.yml').fetch('schedule_enabled', false)")
+
+          if [ "$ENABLED" != "true" ]; then
+            echo "Instagram sync disabled (enabled: false)."
+            exit 0
+          fi
+
+          if [ "$MODE" = "incremental" ]; then
+            if [ "$BOOTSTRAP" != "true" ] || [ "$SCHEDULE" != "true" ]; then
+              echo "Incremental sync requires bootstrap_verified: true and schedule_enabled: true."
+              exit 0
+            fi
+          fi
+
+          python3 -m pip install -r scripts/instagram_sync/requirements.txt
+
+          export INSTAGRAM_USERNAME="${{ secrets.INSTAGRAM_USERNAME }}"
+          export INSTAGRAM_PASSWORD="${{ secrets.INSTAGRAM_PASSWORD }}"
+
+          if [ "$MODE" = "bootstrap" ]; then
+            python3 scripts/instagram_sync/sync.py --bootstrap --limit 5
+          else
+            python3 scripts/instagram_sync/sync.py --incremental
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git add _berita _data/instagram.yml
+          git commit -m "chore(instagram): sync berita from Instagram"
+          git push

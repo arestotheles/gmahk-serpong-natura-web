@@ -5,19 +5,20 @@ church_name: GMAHK Serpong Natura
 service_times:
   - name: Sekolah Sabat
     day: Sabtu
-    time: "08:00"
+    time: "09:00"
     note: Pelajaran Alkitab untuk semua usia
   - name: Ibadah Utama
     day: Sabtu
-    time: "09:00"
+    time: "10:30"
     note: Kebaktian ibadah bersama
 
 contact:
-  address: "Serpong Natura, Tangerang Selatan, Banten"
+  address: "GMAHK Serpong Natura, BIZHUB SERPONG, Jl. Raya Serpong No.99 Blok RC01, Pabuaran, Gunung Sindur, Bogor Regency, West Java 16340"
   phone: "+62 812-0000-0000"
   email: "info@gmahk-serpong-natura.example"
-  map_embed_url: "https://maps.google.com/maps?q=Serpong+Natura+Tangerang&output=embed"
+  map_link: "https://maps.app.goo.gl/Cm8FhZ44eF4UgoCS7"
+  map_embed_url: "https://maps.google.com/maps?q=-6.3702927,106.681009&hl=id&z=17&output=embed"
 
 social:
-  instagram: ""
+  instagram: "https://www.instagram.com/gmahk_serpong_natura/"
   facebook: ""

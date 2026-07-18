@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module AssetResolver
-  STORAGE_TYPES = %w[github s3].freeze
+  STORAGE_TYPES = %w[github s3 external].freeze
 
   def self.resolve(asset, baseurl: "")
     raise ArgumentError, "Asset is required" if asset.nil? || asset.empty?
 
     storage = asset["storage"] || asset[:storage]
-    raise ArgumentError, "Unknown storage type '#{storage}'. Use 'github' or 's3'." unless STORAGE_TYPES.include?(storage)
+    raise ArgumentError, "Unknown storage type '#{storage}'. Use 'github', 's3', or 'external'." unless STORAGE_TYPES.include?(storage)
 
     case storage
     when "github"
@@ -16,11 +16,14 @@ module AssetResolver
 
       normalized = path.to_s.delete_prefix("/")
       "#{baseurl}/#{normalized}"
-    when "s3"
+    when "s3", "external"
       url = asset["url"] || asset[:url]
-      raise ArgumentError, "storage: s3 requires 'url'" if url.nil? || url.to_s.strip.empty?
+      raise ArgumentError, "storage: #{storage} requires 'url'" if url.nil? || url.to_s.strip.empty?
 
-      url.to_s
+      url = url.to_s
+      raise ArgumentError, "storage: external requires an https URL" if storage == "external" && !url.start_with?("https://")
+
+      url
     end
   end
 
